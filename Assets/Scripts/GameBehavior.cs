@@ -19,7 +19,7 @@ public class GameBehavior : MonoBehaviour
     private int _playerHP = 10;
     
     /// <summary>
-    /// Getter/setter for _itemsCollected
+    /// Getter/setter for _itemsCollected.
     /// </summary>
     public int Items
     {
@@ -46,7 +46,7 @@ public class GameBehavior : MonoBehaviour
     }
 
     /// <summary>
-    /// Getter/setter for _playerHP
+    /// Getter/setter for _playerHP.
     /// </summary>
     public int HP
     {
@@ -69,17 +69,17 @@ public class GameBehavior : MonoBehaviour
     }
 
     /// <summary>
-    /// Restarts the first scene and resumes normal time scale
+    /// Restarts the first indexed scene and resumes normal time scale.
     /// </summary>
     public void RestartScene()
     {
-        Utilities.RestartLevel();
+        Utilities.RestartLevel(0);
     }
 
     /// <summary>
-    /// Updates progressText with provided string
+    /// Updates progressText with provided string.
     /// </summary>
-    /// <param name="updatedText">String to update</param>
+    /// <param name="updatedText">String to update.</param>
     private void UpdateScene(string updatedText)
     {
         progressText.text = updatedText;
@@ -87,7 +87,7 @@ public class GameBehavior : MonoBehaviour
     }
     
     /// <summary>
-    /// Sets initial UI texts
+    /// Sets initial UI texts.
     /// </summary>
     private void Start()
     {
