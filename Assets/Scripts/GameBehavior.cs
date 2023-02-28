@@ -73,8 +73,7 @@ public class GameBehavior : MonoBehaviour
     /// </summary>
     public void RestartScene()
     {
-        SceneManager.LoadScene(0);
-        Time.timeScale = 1f;
+        Utilities.RestartLevel();
     }
 
     /// <summary>
