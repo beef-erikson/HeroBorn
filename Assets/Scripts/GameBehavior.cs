@@ -80,7 +80,7 @@ public class GameBehavior : MonoBehaviour
     /// Updates progressText with provided string
     /// </summary>
     /// <param name="updatedText">String to update</param>
-    public void UpdateScene(string updatedText)
+    private void UpdateScene(string updatedText)
     {
         progressText.text = updatedText;
         Time.timeScale = 0f;
