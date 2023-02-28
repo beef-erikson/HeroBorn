@@ -1,0 +1,107 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerBehavior : MonoBehaviour
+{
+    public float moveSpeed = 10f;
+    public float rotateSpeed = 75f;
+    public float jumpVelocity = 5f;
+
+    public float distanceToGround = 0.1f;
+    public LayerMask groundLayer;
+
+    public GameObject bullet;
+    public float bulletSpeed = 100f;
+
+    private float _vInput;
+    private float _hInput;
+    
+    private Rigidbody _rb;
+    private bool _isJumping;
+    
+    private CapsuleCollider _collider;
+    private bool _isShooting;
+
+    private GameBehavior _gameManager;
+
+    private void Start()
+    {
+        _rb = GetComponent<Rigidbody>();
+        _collider = GetComponent<CapsuleCollider>();
+        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameBehavior>();
+    }
+
+    // Update is called once per frame
+    private void Update()
+    {
+        _vInput = Input.GetAxis("Vertical") * moveSpeed;
+        _hInput = Input.GetAxis("Horizontal") * rotateSpeed;
+
+        _isJumping |= Input.GetKeyDown(KeyCode.Space);
+        _isShooting |= Input.GetMouseButtonDown(0);
+
+        /* 
+        // Using translate and rotate for movement
+        this.transform.Translate(Vector3.forward * _vInput * Time.deltaTime);
+        this.transform.Rotate(Vector3.up * _hInput * Time.deltaTime);
+        */
+    }
+
+    // FixedUpdate for rigidbodies
+    private void FixedUpdate()
+    {
+        // Movement
+        var rotation = Vector3.up * _hInput;
+        var angleRot = Quaternion.Euler(rotation * Time.fixedDeltaTime);
+
+        var thisTransform = this.transform;
+        _rb.MovePosition(thisTransform.position + thisTransform.forward * (_vInput * Time.fixedDeltaTime));
+        _rb.MoveRotation(_rb.rotation * angleRot);
+
+        // Jumping
+        if (IsGrounded() && _isJumping)
+        {
+            _rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+        }
+
+        _isJumping = false;
+
+        // Shooting
+        if (_isShooting)
+        {
+            var newBullet = Instantiate(bullet, this.transform.position + new Vector3(0,0,1), this.transform.rotation);
+            var bulletRB = newBullet.GetComponent<Rigidbody>();
+
+            // velocity is used here so gravity isn't affecting the bullet
+            bulletRB.velocity = this.transform.forward * bulletSpeed;
+        }
+
+        _isShooting = false;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name == "Enemy")
+        {
+            _gameManager.HP -= 1;
+        }
+    }
+
+    /// <summary>
+    /// Returns whether the player is on the ground or not
+    /// </summary>
+    /// <returns>Is the object grounded?</returns>
+    private bool IsGrounded()
+    {
+        // center x, min y, center z is the bottom of the capsule
+        var bounds = _collider.bounds;
+        var capsuleBottom = new Vector3(bounds.center.x, bounds.min.y, bounds.center.z);
+
+        // start of capsule, end of capsule, radius, layer mask, query trigger
+        var grounded = Physics.CheckCapsule(bounds.center, capsuleBottom, distanceToGround, groundLayer, QueryTriggerInteraction.Ignore);
+
+        return grounded;
+    }
+}
