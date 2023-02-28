@@ -8,7 +8,6 @@ public class PlayerBehavior : MonoBehaviour
     public float moveSpeed = 10f;
     public float rotateSpeed = 75f;
     public float jumpVelocity = 5f;
-
     public float distanceToGround = 0.1f;
     public LayerMask groundLayer;
 
@@ -17,13 +16,11 @@ public class PlayerBehavior : MonoBehaviour
 
     private float _vInput;
     private float _hInput;
-    
     private Rigidbody _rb;
-    private bool _isJumping;
-    
     private CapsuleCollider _collider;
+    private bool _isJumping;
     private bool _isShooting;
-
+    
     private GameBehavior _gameManager;
 
     private void Start()

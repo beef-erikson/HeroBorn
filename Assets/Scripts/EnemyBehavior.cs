@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,6 +13,9 @@ public class EnemyBehavior : MonoBehaviour
 
     private int _lives = 3;
 
+    /// <summary>
+    /// Getter/setter for _lives.
+    /// </summary>
     public int EnemyLives
     {
         get => _lives;
@@ -29,6 +30,9 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Initializes variables and patrols.
+    /// </summary>
     private void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -38,6 +42,9 @@ public class EnemyBehavior : MonoBehaviour
         MoveToNextPatrolLocation();
     }
 
+    /// <summary>
+    /// Adds all children of patrolRoute to locations list.
+    /// </summary>
     private void InitializePatrolRoute()
     {
         foreach (Transform child in patrolRoute)
@@ -46,6 +53,9 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Moves Enemy to the next location from patrolRoute.
+    /// </summary>
     private void MoveToNextPatrolLocation()
     {
         if (locations.Count == 0)
@@ -57,6 +67,10 @@ public class EnemyBehavior : MonoBehaviour
         _locationIndex = (_locationIndex + 1) % locations.Count;
     }
 
+    /// <summary>
+    /// Attacks player, if present in trigger.
+    /// </summary>
+    /// <param name="other">Collider the Enemy entered.</param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.name != "Player") return;
@@ -65,6 +79,10 @@ public class EnemyBehavior : MonoBehaviour
         Debug.Log("Player detected - attack!");
     }
 
+    /// <summary>
+    /// Resumes patrol if player is targeted and leaves the trigger range.
+    /// </summary>
+    /// <param name="other">Collider that is exiting range.</param>
     private void OnTriggerExit(Collider other)
     {
         if (other.name == "Player")
@@ -73,6 +91,9 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Moves to next patrol point if current destination reached.
+    /// </summary>
     private void Update()
     {
         if (_agent.remainingDistance < 0.2f && !_agent.pathPending)
@@ -80,13 +101,16 @@ public class EnemyBehavior : MonoBehaviour
            MoveToNextPatrolLocation();
         }
     }
-
+    
+    /// <summary>
+    /// If shot by bullet, subtracts a life.
+    /// </summary>
+    /// <param name="collision">Object that entered collision.</param>
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Bullet(Clone)")
-        {
-            EnemyLives -= 1;
-            Debug.Log("Critical hit!");
-        }
+        if (collision.gameObject.name != "Bullet(Clone)") return;
+        
+        EnemyLives -= 1;
+        Debug.Log("Critical hit!");
     }
 }

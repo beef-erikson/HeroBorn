@@ -1,12 +1,9 @@
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
 public class GameBehavior : MonoBehaviour
 {
-    
     private const int MaxItems = 1;
     
     public TMP_Text healthText;

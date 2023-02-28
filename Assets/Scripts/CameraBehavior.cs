@@ -8,13 +8,13 @@ public class CameraBehavior : MonoBehaviour
     private Transform _targetTF;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _targetTF = GameObject.Find("Player").transform;
     }
 
     // LateUpdate is called after Update
-    void LateUpdate()
+    private void LateUpdate()
     {
         this.transform.position = _targetTF.TransformPoint(camOffset);
         this.transform.LookAt(_targetTF);
