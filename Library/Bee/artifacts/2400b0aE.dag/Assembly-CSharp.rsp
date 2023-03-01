@@ -363,6 +363,7 @@
 "Assets/Scripts/Character.cs"
 "Assets/Scripts/EnemyBehavior.cs"
 "Assets/Scripts/GameBehavior.cs"
+"Assets/Scripts/IManager.cs"
 "Assets/Scripts/ItemBehavior.cs"
 "Assets/Scripts/ItemRotation.cs"
 "Assets/Scripts/LearningCurve.cs"

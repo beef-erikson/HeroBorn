@@ -198,7 +198,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9087f7470fb098149d7785f8ed7f0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxItems: 1
   healthText: {fileID: 290911715}
   itemText: {fileID: 1663728659}
   progressText: {fileID: 1989529346}
@@ -1362,7 +1361,6 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  - component: {fileID: 963194229}
   - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
@@ -1445,32 +1443,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 57.635, y: -103.681, z: 26.893}
---- !u!114 &963194229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 771be18ccbd22e51693e2cd06b5f40f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  addedAge: 1
-  pi: 3.14
-  firstName: Beef
-  isAuthor: 1
-  currentGold: 32
-  pureOfHeart: 1
-  hasSecretIncantation: 0
-  rareItem: Relic Stone
-  characterAction: Attack
-  diceRoll: 7
-  playerLives: 3
-  camTF: {fileID: 0}
-  directionLightGO: {fileID: 705507993}
-  lightTF: {fileID: 0}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0

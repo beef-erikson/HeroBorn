@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GameBehavior : MonoBehaviour
+public class GameBehavior : MonoBehaviour, IManager
 {
     private const int MaxItems = 1;
     
@@ -14,7 +14,10 @@ public class GameBehavior : MonoBehaviour
     
     private int _itemsCollected = 0;
     private int _playerHP = 10;
+    private string _state;
     
+    public string State { get; set; }
+
     /// <summary>
     /// Getter/setter for _itemsCollected.
     /// </summary>
@@ -90,5 +93,13 @@ public class GameBehavior : MonoBehaviour
     {
         itemText.text += _itemsCollected;
         healthText.text += _playerHP;
+
+        Initialize();
+    }
+
+    public void Initialize()
+    {
+        _state = "Game Manager initialized...";
+        Debug.Log(_state);
     }
 }
