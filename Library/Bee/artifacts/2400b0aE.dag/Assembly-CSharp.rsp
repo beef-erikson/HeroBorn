@@ -369,6 +369,7 @@
 "Assets/Scripts/ItemBehavior.cs"
 "Assets/Scripts/ItemRotation.cs"
 "Assets/Scripts/LearningCurve.cs"
+"Assets/Scripts/Loot.cs"
 "Assets/Scripts/Paladin.cs"
 "Assets/Scripts/PlayerBehavior.cs"
 "Assets/Scripts/Utilities.cs"
