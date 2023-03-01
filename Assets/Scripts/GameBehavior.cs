@@ -121,6 +121,11 @@ public class GameBehavior : MonoBehaviour, IManager
     /// </summary>
     public void PrintLootReport()
     {
+        var currentItem = LootStack.Pop();
+        var nextItem = LootStack.Peek();
+        
+        Debug.Log($"You got a {currentItem.Name}! You've got a good chance of finding " +
+                  $"a {nextItem.Name} next!");
         Debug.Log($"There are {LootStack.Count} random loot items waiting for you!");
     }
 }
