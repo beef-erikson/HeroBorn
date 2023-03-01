@@ -361,6 +361,8 @@
 "Assets/Scripts/BulletBehavior.cs"
 "Assets/Scripts/CameraBehavior.cs"
 "Assets/Scripts/Character.cs"
+"Assets/Scripts/CustomExtensions.cs"
+"Assets/Scripts/DataManager.cs"
 "Assets/Scripts/EnemyBehavior.cs"
 "Assets/Scripts/GameBehavior.cs"
 "Assets/Scripts/IManager.cs"

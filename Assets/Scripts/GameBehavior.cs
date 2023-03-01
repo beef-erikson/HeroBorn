@@ -1,6 +1,7 @@
+using CustomExtensions;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class GameBehavior : MonoBehaviour, IManager
 {
@@ -100,6 +101,7 @@ public class GameBehavior : MonoBehaviour, IManager
     public void Initialize()
     {
         _state = "Game Manager initialized...";
+        _state.FancyDebug();
         Debug.Log(_state);
     }
 }

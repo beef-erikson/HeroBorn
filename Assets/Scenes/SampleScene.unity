@@ -164,6 +164,7 @@ GameObject:
   m_Component:
   - component: {fileID: 107924853}
   - component: {fileID: 107924854}
+  - component: {fileID: 107924855}
   m_Layer: 0
   m_Name: Game_Manager
   m_TagString: Untagged
@@ -203,6 +204,18 @@ MonoBehaviour:
   progressText: {fileID: 1989529346}
   winButton: {fileID: 811205268}
   lossButton: {fileID: 1539905486}
+--- !u!114 &107924855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107924852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b4be71aba395b467b1a488aa9b531f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &290911713
 GameObject:
   m_ObjectHideFlags: 0
