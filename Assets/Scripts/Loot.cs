@@ -4,12 +4,17 @@ using UnityEngine;
 
 public struct Loot
 {
-    public string name;
-    public int rarity;
+    private string _name;
+    private int _rarity;
 
+    /// <summary>
+    /// Creates a new loot member.
+    /// </summary>
+    /// <param name="name">Name of the item.</param>
+    /// <param name="rarity">Number for rarity of the item.</param>
     public Loot(string name, int rarity)
     {
-        this.name = name;
-        this.rarity = rarity;
+        this._name = name;
+        this._rarity = rarity;
     }
 }

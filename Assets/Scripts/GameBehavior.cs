@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CustomExtensions;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class GameBehavior : MonoBehaviour, IManager
     public TMP_Text progressText;
     public Button winButton;
     public Button lossButton;
+    public Stack<Loot> LootStack = new Stack<Loot>();
     
     private int _itemsCollected = 0;
     private int _playerHP = 10;
@@ -98,10 +100,27 @@ public class GameBehavior : MonoBehaviour, IManager
         Initialize();
     }
 
+    /// <summary>
+    /// Initializes state and populates LootStack
+    /// </summary>
     public void Initialize()
     {
         _state = "Game Manager initialized...";
         _state.FancyDebug();
         Debug.Log(_state);
+
+        LootStack.Push(new Loot("Sword of Doom", 5));
+        LootStack.Push(new Loot("HP Boost", 1));
+        LootStack.Push(new Loot("Golden Key", 3));
+        LootStack.Push(new Loot("Pair of Winged Boots", 2));
+        LootStack.Push(new Loot("Mythril Bracer", 4));
+    }
+
+    /// <summary>
+    /// Prints out number of items in LootStack
+    /// </summary>
+    public void PrintLootReport()
+    {
+        Debug.Log($"There are {LootStack.Count} random loot items waiting for you!");
     }
 }

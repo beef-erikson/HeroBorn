@@ -6,17 +6,17 @@ public class ItemBehavior : MonoBehaviour
 {
     public GameBehavior gameManager;
 
-    void Start()
+    private void Start()
     {
         gameManager = GameObject.Find("Game_Manager").GetComponent<GameBehavior>();
     }
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Player")
-        {
-            Destroy(this.transform.gameObject);
-            Debug.Log("item collected!");
-            gameManager.Items += 1;
-        }
+        if (collision.gameObject.name != "Player") return;
+        
+        Destroy(this.transform.gameObject);
+        Debug.Log("item collected!");
+        gameManager.Items += 1;
+        gameManager.PrintLootReport();
     }
 }
