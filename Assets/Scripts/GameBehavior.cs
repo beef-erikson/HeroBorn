@@ -14,8 +14,8 @@ public class GameBehavior : MonoBehaviour, IManager
     public TMP_Text progressText;
     public Button winButton;
     public Button lossButton;
-    public Stack<Loot> LootStack = new Stack<Loot>();
     
+    private readonly Stack<Loot> _lootStack = new Stack<Loot>();
     private int _itemsCollected = 0;
     private int _playerHP = 10;
     private string _state;
@@ -102,7 +102,7 @@ public class GameBehavior : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// Initializes state and populates LootStack
+    /// Initializes state and populates _lootStack
     /// </summary>
     public void Initialize()
     {
@@ -110,33 +110,38 @@ public class GameBehavior : MonoBehaviour, IManager
         _state.FancyDebug();
         Debug.Log(_state);
 
-        LootStack.Push(new Loot("Sword of Doom", 5));
-        LootStack.Push(new Loot("HP Boost", 1));
-        LootStack.Push(new Loot("Golden Key", 3));
-        LootStack.Push(new Loot("Pair of Winged Boots", 2));
-        LootStack.Push(new Loot("Mythril Bracer", 4));
+        _lootStack.Push(new Loot("Sword of Doom", 5));
+        _lootStack.Push(new Loot("HP Boost", 1));
+        _lootStack.Push(new Loot("Golden Key", 3));
+        _lootStack.Push(new Loot("Pair of Winged Boots", 2));
+        _lootStack.Push(new Loot("Mythril Bracer", 4));
 
         FilterLoot();
+
+        var itemShop = new Shop<string>();
+        itemShop.AddItem("Potion");
+        itemShop.AddItem("Antidote");
+        Debug.Log($"Items for sale: {itemShop.inventory.Count}");
     }
 
     /// <summary>
-    /// Prints out number of items in LootStack
+    /// Prints out number of items in _lootStack
     /// </summary>
     public void PrintLootReport()
     {
-        var currentItem = LootStack.Pop();
-        var nextItem = LootStack.Peek();
+        var currentItem = _lootStack.Pop();
+        var nextItem = _lootStack.Peek();
         
         Debug.Log($"You got a {currentItem.Name}! You've got a good chance of finding " +
                   $"a {nextItem.Name} next!");
-        Debug.Log($"There are {LootStack.Count} random loot items waiting for you!");
+        Debug.Log($"There are {_lootStack.Count} random loot items waiting for you!");
     }
 
     private void FilterLoot()
     {
         /*
         // Regular LINQ query
-        var rareLoot = LootStack
+        var rareLoot = _lootStack
             .Where(item => item.Rarity >= 3)
             .OrderBy(item => item.Rarity)
             .Select(item => new { item.Name });
@@ -144,7 +149,7 @@ public class GameBehavior : MonoBehaviour, IManager
         
         // Example of LINQ query comprehension syntax, mixing lambda with it.
         // Skips the first entry.
-        var rareLoot = (from item in LootStack
+        var rareLoot = (from item in _lootStack
             where item.Rarity >= 3
             orderby item.Rarity
             select new {item.Name})
