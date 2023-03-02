@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;        
+using System.IO;
+using System.Xml;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour, IManager
@@ -10,6 +12,7 @@ public class DataManager : MonoBehaviour, IManager
     private string _dataPath;
     private string _textFile;
     private string _streamingTextFile;
+    private string _xmlLevelProgress;
     
     public string State { get; set; }
     
@@ -21,6 +24,7 @@ public class DataManager : MonoBehaviour, IManager
         
         _textFile = _dataPath + "Save_Data.txt";
         _streamingTextFile = _dataPath + "Streaming_Save_Data.txt";
+        _xmlLevelProgress = _dataPath + "Progress_Data.xml";
     }
 
     // Start is called before the first frame update
@@ -40,13 +44,15 @@ public class DataManager : MonoBehaviour, IManager
         
         FilesystemInfo();
         NewDirectory();
-        WriteToStream(_streamingTextFile);
-        ReadFromStream(_streamingTextFile);
+        WriteToXML(_xmlLevelProgress);
         
         // Using regular file operations
         //NewTextFile();
-        //WriteTextFile();
+        //WriteToTextFile();
         //ReadFromFile(_textFile);
+        // Using Streams
+        //WriteToStream(_streamingTextFile);
+        //ReadFromStream(_streamingTextFile);
     }
     
     /// <summary>
@@ -108,7 +114,7 @@ public class DataManager : MonoBehaviour, IManager
     /// <summary>
     /// Appends _textFile with time of game starting.
     /// </summary>
-    private void WriteTextFile()
+    private void WriteToTextFile()
     {
         if (!File.Exists(_textFile))
         {
@@ -141,6 +147,26 @@ public class DataManager : MonoBehaviour, IManager
         streamWriter.WriteLine($"Game ended: {DateTime.Now}");
         streamWriter.Close();
         Debug.Log("File contents updated with StreamWriter");
+    }
+
+    private void WriteToXML(string filename)
+    {
+        // Do nothing if file exists
+        if (File.Exists(filename)) return;
+        
+        var xmlStream = File.Create(filename);
+        var xmlWriter = XmlWriter.Create(xmlStream);
+        
+        xmlWriter.WriteStartDocument();
+        xmlWriter.WriteStartElement("level_progress");
+
+        for (var i = 1; i < 5; i++)
+        {
+            xmlWriter.WriteElementString("level", "Level-" + i);
+        }
+        
+        xmlWriter.Close();
+        xmlStream.Close();
     }
     
     /// <summary>
