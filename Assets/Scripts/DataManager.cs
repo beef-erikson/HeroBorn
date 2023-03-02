@@ -126,4 +126,16 @@ public class DataManager : MonoBehaviour, IManager
         
         Debug.Log(File.ReadAllText(filename));
     }
+
+    private void DeleteFile(string filename)
+    {
+        if (!File.Exists(filename))
+        {
+            Debug.Log("File doesn't exist or has already been deleted...");
+            return;
+        }
+        
+        File.Delete(_textFile);
+        Debug.Log("File successfully deleted!");
+    }
 }
