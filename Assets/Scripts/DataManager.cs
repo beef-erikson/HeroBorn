@@ -25,6 +25,7 @@ public class DataManager : MonoBehaviour, IManager
         NewDirectory();
         NewTextFile();
         UpdateTextFile();
+        ReadFromFile(_textFile);
     }
     
     // Awake is called before start
@@ -82,7 +83,7 @@ public class DataManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// Creates _textFile in directory _dataPath with dummy data.
+    /// Creates _textFile in directory _dataPath with header.
     /// </summary>
     private void NewTextFile()
     {
@@ -109,5 +110,20 @@ public class DataManager : MonoBehaviour, IManager
         
         File.AppendAllText(_textFile, $"Game started: {DateTime.Now}\n");
         Debug.Log("File updated successfully!");
+    }
+
+    /// <summary>
+    /// Writes to Debug.Log contents of file.
+    /// </summary>
+    /// <param name="filename">File to print to Debug.Log</param>
+    private static void ReadFromFile(string filename)
+    {
+        if (!File.Exists(filename))
+        {
+            Debug.Log("File doesn't exist...");
+            return;
+        }
+        
+        Debug.Log(File.ReadAllText(filename));
     }
 }
