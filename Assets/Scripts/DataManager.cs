@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class DataManager : MonoBehaviour, IManager
     private string _streamingTextFile;
     private string _xmlLevelProgress;
     private string _xmlWeapons;
+    private string _jsonWeapons;
+    
     private readonly List<Weapon> _weaponInventory = new List<Weapon>
     {
         new Weapon("Sword of Doom", 100),
@@ -27,10 +30,11 @@ public class DataManager : MonoBehaviour, IManager
         _dataPath = Application.persistentDataPath + "/Player_Data/";
         Debug.Log(_dataPath);
         
-        _textFile = _dataPath + "Save_Data.txt";
-        _streamingTextFile = _dataPath + "Streaming_Save_Data.txt";
-        _xmlLevelProgress = _dataPath + "Progress_Data.xml";
-        _xmlWeapons = _dataPath + "WeaponInventory.xml";
+        //_textFile = _dataPath + "Save_Data.txt";
+        //_streamingTextFile = _dataPath + "Streaming_Save_Data.txt";
+        //_xmlLevelProgress = _dataPath + "Progress_Data.xml";
+        //_xmlWeapons = _dataPath + "WeaponInventory.xml";
+        _jsonWeapons = _dataPath + "WeaponJSON.json";
     }
 
     // Start is called before the first frame update
@@ -47,21 +51,24 @@ public class DataManager : MonoBehaviour, IManager
         _state = "Data Manager initialized...";
         Debug.Log(_state);
         
-        
         FilesystemInfo();
         NewDirectory();
-        SerializeXML();
-        DeserializeXML();
+        SerializeJson();
         
         // Using regular file operations
         //NewTextFile();
         //WriteToTextFile();
         //ReadFromFile(_textFile);
+        
         // Using Streams
         //WriteToStream(_streamingTextFile);
         //ReadFromStream(_streamingTextFile);
         //WriteToXML(_xmlLevelProgress);
         //ReadFromStream(_xmlLevelProgress);
+        
+        // Serialization of XML
+        //SerializeXML();
+        //DeserializeXML();
     }
     
     /// <summary>
@@ -224,6 +231,9 @@ public class DataManager : MonoBehaviour, IManager
         Debug.Log("File successfully deleted!");
     }
 
+    /// <summary>
+    /// Serializes list of weapons into an XML file.
+    /// </summary>
     private void SerializeXML()
     {
         var xmlSerializer = new XmlSerializer(typeof(List<Weapon>));
@@ -232,6 +242,9 @@ public class DataManager : MonoBehaviour, IManager
         xmlSerializer.Serialize(stream, _weaponInventory);
     }
 
+    /// <summary>
+    /// Deserializes XML file and outputs to Debug.Log.
+    /// </summary>
     private void DeserializeXML()
     {
         // If there's no weapons XML file, do nothing
@@ -245,5 +258,17 @@ public class DataManager : MonoBehaviour, IManager
         {
             Debug.Log($"Weapon: {weapon.name} - Damage: {weapon.damage}");
         }
+    }
+
+    /// <summary>
+    /// Serializes sample weapon into JSON file.
+    /// </summary>
+    private void SerializeJson()
+    {
+        var sword = new Weapon("Sword of Doom", 100);
+        var jsonString = JsonUtility.ToJson(sword, true);
+
+        using var stream = File.CreateText(_jsonWeapons);
+        stream.WriteLine(jsonString);
     }
 }
