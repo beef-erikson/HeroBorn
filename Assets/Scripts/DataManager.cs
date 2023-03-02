@@ -12,7 +12,7 @@ public class DataManager : MonoBehaviour, IManager
     public string State { get; set; }
 
     /// <summary>
-    /// Runs FilesystemInfo()
+    /// Creates directory "Player_Data" if not already present.
     /// </summary>
     public void Initialize()
     {
@@ -46,6 +46,9 @@ public class DataManager : MonoBehaviour, IManager
         Debug.Log($"Temporary path: {Path.GetTempPath()}");
     }
 
+    /// <summary>
+    /// Creates directory specified in _dataPath, if not already present.
+    /// </summary>
     private void NewDirectory()
     {
         if (Directory.Exists(_dataPath))
@@ -56,5 +59,20 @@ public class DataManager : MonoBehaviour, IManager
 
         Directory.CreateDirectory(_dataPath);
         Debug.Log($"New directory created at {_dataPath}");
+    }
+
+    /// <summary>
+    /// Recursively deletes _dataPath, if present.
+    /// </summary>
+    private void DeleteDirectory()
+    {
+        if (!Directory.Exists(_dataPath))
+        {
+            Debug.Log("Directory doesn't exist or has already been deleted...");
+            return;
+        }
+        
+        Directory.Delete(_dataPath, true);
+        Debug.Log($"Directory {_dataPath} successfully deleted.");
     }
 }

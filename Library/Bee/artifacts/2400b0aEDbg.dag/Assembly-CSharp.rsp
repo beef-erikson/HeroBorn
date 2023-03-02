@@ -361,13 +361,18 @@
 "Assets/Scripts/BulletBehavior.cs"
 "Assets/Scripts/CameraBehavior.cs"
 "Assets/Scripts/Character.cs"
+"Assets/Scripts/CustomExtensions.cs"
+"Assets/Scripts/DataManager.cs"
 "Assets/Scripts/EnemyBehavior.cs"
 "Assets/Scripts/GameBehavior.cs"
+"Assets/Scripts/IManager.cs"
 "Assets/Scripts/ItemBehavior.cs"
 "Assets/Scripts/ItemRotation.cs"
 "Assets/Scripts/LearningCurve.cs"
+"Assets/Scripts/Loot.cs"
 "Assets/Scripts/Paladin.cs"
 "Assets/Scripts/PlayerBehavior.cs"
+"Assets/Scripts/Utilities.cs"
 "Assets/Scripts/Weapon.cs"
 -langversion:9.0
 
