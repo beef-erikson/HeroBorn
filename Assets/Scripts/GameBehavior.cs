@@ -132,18 +132,13 @@ public class GameBehavior : MonoBehaviour, IManager
         Debug.Log($"There are {LootStack.Count} random loot items waiting for you!");
     }
 
-    public void FilterLoot()
+    private void FilterLoot()
     {
-        var rareLoot = LootStack.Where(LootPredicate);
+        var rareLoot = LootStack.Where(item => item.Rarity >= 3);
 
         foreach (var item in rareLoot)
         {
             Debug.Log($"Rare item: {item.Name}!");
         }
-    }
-
-    public bool LootPredicate(Loot loot)
-    {
-        return loot.Rarity >= 3;
     }
 }
