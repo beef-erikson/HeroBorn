@@ -1,13 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using System.Data.Common;
+using System.IO;        
 using UnityEngine;
 
 public class DataManager : MonoBehaviour, IManager
 {
     private string _state;
     private string _dataPath;
+    private string _textFile;
     
     public string State { get; set; }
 
@@ -18,8 +20,11 @@ public class DataManager : MonoBehaviour, IManager
     {
         _state = "Data Manager initialized...";
         Debug.Log(_state);
+        _textFile = _dataPath + "Save_Data.txt";
 
+        FilesystemInfo();
         NewDirectory();
+        NewTextFile();
     }
     
     // Awake is called before start
@@ -74,5 +79,17 @@ public class DataManager : MonoBehaviour, IManager
         
         Directory.Delete(_dataPath, true);
         Debug.Log($"Directory {_dataPath} successfully deleted.");
+    }
+
+    private void NewTextFile()
+    {
+        if (File.Exists(_textFile))
+        {
+            Debug.Log("File already exists...");
+            return;
+        }
+        
+        File.WriteAllText(_textFile, "<SAVE DATA>\n");
+        Debug.Log("New file created!");
     }
 }
