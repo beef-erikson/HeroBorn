@@ -9,30 +9,18 @@ public class DataManager : MonoBehaviour, IManager
     private string _state;
     private string _dataPath;
     private string _textFile;
+    private string _streamingTextFile;
     
     public string State { get; set; }
-
-    /// <summary>
-    /// Creates directory "Player_Data" if not already present.
-    /// </summary>
-    public void Initialize()
-    {
-        _state = "Data Manager initialized...";
-        Debug.Log(_state);
-        _textFile = _dataPath + "Save_Data.txt";
-
-        FilesystemInfo();
-        NewDirectory();
-        NewTextFile();
-        UpdateTextFile();
-        ReadFromFile(_textFile);
-    }
     
     // Awake is called before start
     private void Awake()
     {
         _dataPath = Application.persistentDataPath + "/Player_Data/";
         Debug.Log(_dataPath);
+        
+        _textFile = _dataPath + "Save_Data.txt";
+        _streamingTextFile = _dataPath + "Streaming_Save_Data.txt";
     }
 
     // Start is called before the first frame update
@@ -41,6 +29,25 @@ public class DataManager : MonoBehaviour, IManager
         Initialize();
     }
 
+    /// <summary>
+    /// Creates directory "Player_Data" if not already present.
+    /// </summary>
+    public void Initialize()
+    {
+        _state = "Data Manager initialized...";
+        Debug.Log(_state);
+        
+        
+        FilesystemInfo();
+        NewDirectory();
+        WriteToStream(_streamingTextFile);
+        
+        // Using regular file operations
+        //NewTextFile();
+        //UpdateTextFile();
+        //ReadFromFile(_textFile);
+    }
+    
     /// <summary>
     /// Logs various directory info
     /// </summary>
@@ -127,6 +134,10 @@ public class DataManager : MonoBehaviour, IManager
         Debug.Log(File.ReadAllText(filename));
     }
 
+    /// <summary>
+    /// Deletes the supplied filename, if it exists.
+    /// </summary>
+    /// <param name="filename">Filename to delete.</param>
     private void DeleteFile(string filename)
     {
         if (!File.Exists(filename))
@@ -137,5 +148,28 @@ public class DataManager : MonoBehaviour, IManager
         
         File.Delete(_textFile);
         Debug.Log("File successfully deleted!");
+    }
+
+    /// <summary>
+    /// Creates and adds header file from provided filename.
+    /// Appends a game ended message with DateTime.Now.
+    /// </summary>
+    /// <param name="filename">File to write to.</param>
+    private static void WriteToStream(string filename)
+    {
+        if (!File.Exists(filename))
+        {
+            var newStream = File.CreateText(filename);
+            
+            newStream.WriteLine("<Save Data> for HERO BORN \n");
+            newStream.Close();
+            Debug.Log("New file created with StreamWriter!");
+        }
+
+        var streamWriter = File.AppendText(filename);
+        
+        streamWriter.WriteLine($"Game ended: {DateTime.Now}");
+        streamWriter.Close();
+        Debug.Log("File contents updated with StreamWriter");
     }
 }
