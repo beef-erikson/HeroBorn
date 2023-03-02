@@ -54,6 +54,7 @@ public class DataManager : MonoBehaviour, IManager
         FilesystemInfo();
         NewDirectory();
         SerializeJson();
+        DeserializeJson();
         
         // Using regular file operations
         //NewTextFile();
@@ -274,5 +275,22 @@ public class DataManager : MonoBehaviour, IManager
 
         using var stream = File.CreateText(_jsonWeapons);
         stream.WriteLine(jsonString);
+    }
+
+    /// <summary>
+    /// Deserializes _jsonWeapons and outputs to Debug.Log.
+    /// </summary>
+    private void DeserializeJson()
+    {
+        if (!File.Exists(_jsonWeapons)) return;
+        
+        using var stream = new StreamReader(_jsonWeapons);
+        var jsonString = stream.ReadToEnd();
+        var weaponData = JsonUtility.FromJson<WeaponShop>(jsonString);
+            
+        foreach (var weapon in weaponData.inventory)
+        {
+            Debug.Log($"Weapon: {weapon.name} - Damage: {weapon.damage}");    
+        }
     }
 }
