@@ -149,7 +149,6 @@ public class DataManager : MonoBehaviour, IManager
         {
             using var newStream = File.CreateText(filename);
             newStream.WriteLine("<Save Data> for HERO BORN \n");
-
             
             Debug.Log("New file created with StreamWriter!");
         }
@@ -157,7 +156,6 @@ public class DataManager : MonoBehaviour, IManager
         // Appends Game ended message
         using var streamWriter = File.AppendText(filename);
         streamWriter.WriteLine($"Game ended: {DateTime.Now}");
-
         
         Debug.Log("File contents updated with StreamWriter");
     }
@@ -179,8 +177,6 @@ public class DataManager : MonoBehaviour, IManager
         {
             xmlWriter.WriteElementString("level", "Level-" + i);
         }
-        
-        
     }
 
     /// <summary>
@@ -212,7 +208,6 @@ public class DataManager : MonoBehaviour, IManager
 
         using var streamReader = new StreamReader(filename);
         Debug.Log(streamReader.ReadToEnd());
-        
     }
     
     /// <summary>
@@ -237,7 +232,6 @@ public class DataManager : MonoBehaviour, IManager
 
         using var stream = File.Create(_xmlWeapons);
         xmlSerializer.Serialize(stream, _weaponInventory);
-        
     }
 
     private void DeserializeXML()
@@ -253,6 +247,5 @@ public class DataManager : MonoBehaviour, IManager
         {
             Debug.Log($"Weapon: {weapon.name} - Damage: {weapon.damage}");
         }
-        
     }
 }
