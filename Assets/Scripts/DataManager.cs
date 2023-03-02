@@ -41,10 +41,11 @@ public class DataManager : MonoBehaviour, IManager
         FilesystemInfo();
         NewDirectory();
         WriteToStream(_streamingTextFile);
+        ReadFromStream(_streamingTextFile);
         
         // Using regular file operations
         //NewTextFile();
-        //UpdateTextFile();
+        //WriteTextFile();
         //ReadFromFile(_textFile);
     }
     
@@ -107,7 +108,7 @@ public class DataManager : MonoBehaviour, IManager
     /// <summary>
     /// Appends _textFile with time of game starting.
     /// </summary>
-    private void UpdateTextFile()
+    private void WriteTextFile()
     {
         if (!File.Exists(_textFile))
         {
@@ -117,37 +118,6 @@ public class DataManager : MonoBehaviour, IManager
         
         File.AppendAllText(_textFile, $"Game started: {DateTime.Now}\n");
         Debug.Log("File updated successfully!");
-    }
-
-    /// <summary>
-    /// Writes to Debug.Log contents of file.
-    /// </summary>
-    /// <param name="filename">File to print to Debug.Log</param>
-    private static void ReadFromFile(string filename)
-    {
-        if (!File.Exists(filename))
-        {
-            Debug.Log("File doesn't exist...");
-            return;
-        }
-        
-        Debug.Log(File.ReadAllText(filename));
-    }
-
-    /// <summary>
-    /// Deletes the supplied filename, if it exists.
-    /// </summary>
-    /// <param name="filename">Filename to delete.</param>
-    private void DeleteFile(string filename)
-    {
-        if (!File.Exists(filename))
-        {
-            Debug.Log("File doesn't exist or has already been deleted...");
-            return;
-        }
-        
-        File.Delete(_textFile);
-        Debug.Log("File successfully deleted!");
     }
 
     /// <summary>
@@ -171,5 +141,52 @@ public class DataManager : MonoBehaviour, IManager
         streamWriter.WriteLine($"Game ended: {DateTime.Now}");
         streamWriter.Close();
         Debug.Log("File contents updated with StreamWriter");
+    }
+    
+    /// <summary>
+    /// Writes to Debug.Log contents of file.
+    /// </summary>
+    /// <param name="filename">File to print to Debug.Log</param>
+    private static void ReadFromFile(string filename)
+    {
+        if (!File.Exists(filename))
+        {
+            Debug.Log("File doesn't exist...");
+            return;
+        }
+        
+        Debug.Log(File.ReadAllText(filename));
+    }
+
+    /// <summary>
+    /// Writes provided file contents via StreamReader to Debug.Log, if present.
+    /// </summary>
+    /// <param name="filename">File to read.</param>
+    private static void ReadFromStream(string filename)
+    {
+        if (!File.Exists(filename))
+        {
+            Debug.Log("File doesn't exist...");
+            return;
+        }
+
+        var streamReader = new StreamReader(filename);
+        Debug.Log(streamReader.ReadToEnd());
+    }
+    
+    /// <summary>
+    /// Deletes the supplied filename, if it exists.
+    /// </summary>
+    /// <param name="filename">Filename to delete.</param>
+    private void DeleteFile(string filename)
+    {
+        if (!File.Exists(filename))
+        {
+            Debug.Log("File doesn't exist or has already been deleted...");
+            return;
+        }
+        
+        File.Delete(_textFile);
+        Debug.Log("File successfully deleted!");
     }
 }
