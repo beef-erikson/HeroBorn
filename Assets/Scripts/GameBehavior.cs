@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CustomExtensions;
@@ -134,11 +135,20 @@ public class GameBehavior : MonoBehaviour, IManager
 
     private void FilterLoot()
     {
+        /*
+        // Regular LINQ query
         var rareLoot = LootStack
             .Where(item => item.Rarity >= 3)
             .OrderBy(item => item.Rarity)
             .Select(item => new { item.Name });
-
+        */
+        
+        // Example of LINQ query comprehension syntax
+        var rareLoot = from item in LootStack
+            where item.Rarity >= 3
+            orderby item.Rarity
+            select new {item.Name};
+        
         foreach (var item in rareLoot)
         {
             Debug.Log($"Rare item: {item.Name}!");
