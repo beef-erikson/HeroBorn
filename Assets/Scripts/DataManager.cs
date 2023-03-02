@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.IO;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour, IManager
@@ -19,5 +19,15 @@ public class DataManager : MonoBehaviour, IManager
     {
         _state = "Data Manager initialized...";
         Debug.Log(_state);
+
+        FilesystemInfo();
+    }
+
+    private static void FilesystemInfo()
+    {
+        Debug.Log($"Path separator character: {Path.PathSeparator}");
+        Debug.Log($"Directory separator character: {Path.DirectorySeparatorChar}");
+        Debug.Log($"Current directory: {Directory.GetCurrentDirectory()}");
+        Debug.Log($"Temporary path: {Path.GetTempPath()}");
     }
 }
