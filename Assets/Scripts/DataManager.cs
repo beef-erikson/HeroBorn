@@ -11,6 +11,18 @@ public class DataManager : MonoBehaviour, IManager
     
     public string State { get; set; }
 
+    /// <summary>
+    /// Runs FilesystemInfo()
+    /// </summary>
+    public void Initialize()
+    {
+        _state = "Data Manager initialized...";
+        Debug.Log(_state);
+
+        NewDirectory();
+    }
+    
+    // Awake is called before start
     private void Awake()
     {
         _dataPath = Application.persistentDataPath + "/Player_Data/";
@@ -24,21 +36,25 @@ public class DataManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// Runs FilesystemInfo()
+    /// Logs various directory info
     /// </summary>
-    public void Initialize()
-    {
-        _state = "Data Manager initialized...";
-        Debug.Log(_state);
-
-        FilesystemInfo();
-    }
-
     private static void FilesystemInfo()
     {
         Debug.Log($"Path separator character: {Path.PathSeparator}");
         Debug.Log($"Directory separator character: {Path.DirectorySeparatorChar}");
         Debug.Log($"Current directory: {Directory.GetCurrentDirectory()}");
         Debug.Log($"Temporary path: {Path.GetTempPath()}");
+    }
+
+    private void NewDirectory()
+    {
+        if (Directory.Exists(_dataPath))
+        {
+            Debug.Log("Directory already exists...");
+            return;
+        }
+
+        Directory.CreateDirectory(_dataPath);
+        Debug.Log($"New directory created at {_dataPath}");
     }
 }
