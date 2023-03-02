@@ -134,7 +134,9 @@ public class GameBehavior : MonoBehaviour, IManager
 
     private void FilterLoot()
     {
-        var rareLoot = LootStack.Where(item => item.Rarity >= 3);
+        var rareLoot = LootStack
+            .Where(item => item.Rarity >= 3)
+            .OrderBy(item => item.Rarity);
 
         foreach (var item in rareLoot)
         {
