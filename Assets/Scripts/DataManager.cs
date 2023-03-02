@@ -3,19 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using System.Xml.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour, IManager
 {
+    public string State { get; set; }
     private string _state;
     private string _dataPath;
     private string _textFile;
     private string _streamingTextFile;
     private string _xmlLevelProgress;
-    
-    public string State { get; set; }
-    
+    private string _xmlWeapons;
+    private List<Weapon> _weaponInventory = new List<Weapon>
+    {
+        new Weapon("Sword of Doom", 100),
+        new Weapon("Butterfly Knives", 25),
+        new Weapon("Brass Knuckles", 15),
+    };
+
     // Awake is called before start
     private void Awake()
     {
@@ -25,6 +32,7 @@ public class DataManager : MonoBehaviour, IManager
         _textFile = _dataPath + "Save_Data.txt";
         _streamingTextFile = _dataPath + "Streaming_Save_Data.txt";
         _xmlLevelProgress = _dataPath + "Progress_Data.xml";
+        _xmlWeapons = _dataPath + "WeaponInventory.xml";
     }
 
     // Start is called before the first frame update
@@ -44,9 +52,8 @@ public class DataManager : MonoBehaviour, IManager
         
         FilesystemInfo();
         NewDirectory();
-        WriteToXML(_xmlLevelProgress);
-        ReadFromStream(_xmlLevelProgress);
-        
+        SerializeXML();
+
         // Using regular file operations
         //NewTextFile();
         //WriteToTextFile();
@@ -54,6 +61,8 @@ public class DataManager : MonoBehaviour, IManager
         // Using Streams
         //WriteToStream(_streamingTextFile);
         //ReadFromStream(_streamingTextFile);
+        //WriteToXML(_xmlLevelProgress);
+        //ReadFromStream(_xmlLevelProgress);
     }
     
     /// <summary>
@@ -225,5 +234,15 @@ public class DataManager : MonoBehaviour, IManager
         
         File.Delete(_textFile);
         Debug.Log("File successfully deleted!");
+    }
+
+    private void SerializeXML()
+    {
+        var xmlSerializer = new XmlSerializer(typeof(List<Weapon>));
+
+        using (FileStream stream = File.Create(_xmlWeapons))
+        {
+            xmlSerializer.Serialize(stream, _weaponInventory);
+        }
     }
 }
