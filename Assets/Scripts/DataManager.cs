@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.IO;        
 using UnityEngine;
 
@@ -25,6 +24,7 @@ public class DataManager : MonoBehaviour, IManager
         FilesystemInfo();
         NewDirectory();
         NewTextFile();
+        UpdateTextFile();
     }
     
     // Awake is called before start
@@ -81,6 +81,9 @@ public class DataManager : MonoBehaviour, IManager
         Debug.Log($"Directory {_dataPath} successfully deleted.");
     }
 
+    /// <summary>
+    /// Creates _textFile in directory _dataPath with dummy data.
+    /// </summary>
     private void NewTextFile()
     {
         if (File.Exists(_textFile))
@@ -91,5 +94,20 @@ public class DataManager : MonoBehaviour, IManager
         
         File.WriteAllText(_textFile, "<SAVE DATA>\n");
         Debug.Log("New file created!");
+    }
+
+    /// <summary>
+    /// Appends _textFile with time of game starting.
+    /// </summary>
+    private void UpdateTextFile()
+    {
+        if (!File.Exists(_textFile))
+        {
+            Debug.Log("File Doesn't exist...");
+            return;
+        }
+        
+        File.AppendAllText(_textFile, $"Game started: {DateTime.Now}\n");
+        Debug.Log("File updated successfully!");
     }
 }
