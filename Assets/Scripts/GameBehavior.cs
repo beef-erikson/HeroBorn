@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CustomExtensions;
 using TMPro;
 using UnityEngine;
@@ -114,6 +115,8 @@ public class GameBehavior : MonoBehaviour, IManager
         LootStack.Push(new Loot("Golden Key", 3));
         LootStack.Push(new Loot("Pair of Winged Boots", 2));
         LootStack.Push(new Loot("Mythril Bracer", 4));
+
+        FilterLoot();
     }
 
     /// <summary>
@@ -127,5 +130,20 @@ public class GameBehavior : MonoBehaviour, IManager
         Debug.Log($"You got a {currentItem.Name}! You've got a good chance of finding " +
                   $"a {nextItem.Name} next!");
         Debug.Log($"There are {LootStack.Count} random loot items waiting for you!");
+    }
+
+    public void FilterLoot()
+    {
+        var rareLoot = LootStack.Where(LootPredicate);
+
+        foreach (var item in rareLoot)
+        {
+            Debug.Log($"Rare item: {item.Name}!");
+        }
+    }
+
+    public bool LootPredicate(Loot loot)
+    {
+        return loot.Rarity >= 3;
     }
 }
