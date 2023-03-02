@@ -136,7 +136,8 @@ public class GameBehavior : MonoBehaviour, IManager
     {
         var rareLoot = LootStack
             .Where(item => item.Rarity >= 3)
-            .OrderBy(item => item.Rarity);
+            .OrderBy(item => item.Rarity)
+            .Select(item => new { item.Name });
 
         foreach (var item in rareLoot)
         {
