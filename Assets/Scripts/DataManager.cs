@@ -261,12 +261,16 @@ public class DataManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// Serializes sample weapon into JSON file.
+    /// Serializes inventory into JSON file.
     /// </summary>
     private void SerializeJson()
     {
-        var sword = new Weapon("Sword of Doom", 100);
-        var jsonString = JsonUtility.ToJson(sword, true);
+        var shop = new WeaponShop
+        {
+            inventory = _weaponInventory
+        };
+
+        var jsonString = JsonUtility.ToJson(shop, true);
 
         using var stream = File.CreateText(_jsonWeapons);
         stream.WriteLine(jsonString);

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -25,4 +26,10 @@ public struct Weapon
     {
         Debug.Log($"Weapon: {this.name} - {this.damage} DMG");
     }
+}
+
+[Serializable]
+public class WeaponShop
+{
+    public List<Weapon> inventory;
 }
