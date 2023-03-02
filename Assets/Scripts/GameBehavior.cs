@@ -143,11 +143,13 @@ public class GameBehavior : MonoBehaviour, IManager
             .Select(item => new { item.Name });
         */
         
-        // Example of LINQ query comprehension syntax
-        var rareLoot = from item in LootStack
+        // Example of LINQ query comprehension syntax, mixing lambda with it.
+        // Skips the first entry.
+        var rareLoot = (from item in LootStack
             where item.Rarity >= 3
             orderby item.Rarity
-            select new {item.Name};
+            select new {item.Name})
+            .Skip(1);
         
         foreach (var item in rareLoot)
         {
