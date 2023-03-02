@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DataManager : MonoBehaviour, IManager
@@ -16,7 +14,7 @@ public class DataManager : MonoBehaviour, IManager
     private string _streamingTextFile;
     private string _xmlLevelProgress;
     private string _xmlWeapons;
-    private List<Weapon> _weaponInventory = new List<Weapon>
+    private readonly List<Weapon> _weaponInventory = new List<Weapon>
     {
         new Weapon("Sword of Doom", 100),
         new Weapon("Butterfly Knives", 25),
