@@ -45,6 +45,7 @@ public class DataManager : MonoBehaviour, IManager
         FilesystemInfo();
         NewDirectory();
         WriteToXML(_xmlLevelProgress);
+        ReadFromStream(_xmlLevelProgress);
         
         // Using regular file operations
         //NewTextFile();
@@ -133,39 +134,48 @@ public class DataManager : MonoBehaviour, IManager
     /// <param name="filename">File to write to.</param>
     private static void WriteToStream(string filename)
     {
+        // Creates file and header if not present
         if (!File.Exists(filename))
         {
-            var newStream = File.CreateText(filename);
+            using (var newStream = File.CreateText(filename))
+            {
+                newStream.WriteLine("<Save Data> for HERO BORN \n");
+            }
             
-            newStream.WriteLine("<Save Data> for HERO BORN \n");
-            newStream.Close();
             Debug.Log("New file created with StreamWriter!");
         }
 
-        var streamWriter = File.AppendText(filename);
+        // Appends Game ended message
+        using (var streamWriter = File.AppendText(filename))
+        {
+            streamWriter.WriteLine($"Game ended: {DateTime.Now}");
+        }
         
-        streamWriter.WriteLine($"Game ended: {DateTime.Now}");
-        streamWriter.Close();
         Debug.Log("File contents updated with StreamWriter");
     }
 
+    /// <summary>
+    /// Writes the contents of filename to XML file.
+    /// </summary>
+    /// <param name="filename">File to write to XML</param>
     private void WriteToXML(string filename)
     {
         // Do nothing if file exists
         if (File.Exists(filename)) return;
         
         var xmlStream = File.Create(filename);
-        var xmlWriter = XmlWriter.Create(xmlStream);
         
-        xmlWriter.WriteStartDocument();
-        xmlWriter.WriteStartElement("level_progress");
-
-        for (var i = 1; i < 5; i++)
+        using (var xmlWriter = XmlWriter.Create(xmlStream))
         {
-            xmlWriter.WriteElementString("level", "Level-" + i);
+            xmlWriter.WriteStartDocument();
+            xmlWriter.WriteStartElement("level_progress");
+
+            for (var i = 1; i < 5; i++)
+            {
+                xmlWriter.WriteElementString("level", "Level-" + i);
+            }   
         }
         
-        xmlWriter.Close();
         xmlStream.Close();
     }
     
@@ -198,6 +208,7 @@ public class DataManager : MonoBehaviour, IManager
 
         var streamReader = new StreamReader(filename);
         Debug.Log(streamReader.ReadToEnd());
+        streamReader.Close();
     }
     
     /// <summary>
