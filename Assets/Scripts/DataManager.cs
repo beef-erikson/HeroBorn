@@ -53,7 +53,8 @@ public class DataManager : MonoBehaviour, IManager
         FilesystemInfo();
         NewDirectory();
         SerializeXML();
-
+        DeserializeXML();
+        
         // Using regular file operations
         //NewTextFile();
         //WriteToTextFile();
@@ -146,19 +147,17 @@ public class DataManager : MonoBehaviour, IManager
         // Creates file and header if not present
         if (!File.Exists(filename))
         {
-            using (var newStream = File.CreateText(filename))
-            {
-                newStream.WriteLine("<Save Data> for HERO BORN \n");
-            }
+            using var newStream = File.CreateText(filename);
+            newStream.WriteLine("<Save Data> for HERO BORN \n");
+
             
             Debug.Log("New file created with StreamWriter!");
         }
 
         // Appends Game ended message
-        using (var streamWriter = File.AppendText(filename))
-        {
-            streamWriter.WriteLine($"Game ended: {DateTime.Now}");
-        }
+        using var streamWriter = File.AppendText(filename);
+        streamWriter.WriteLine($"Game ended: {DateTime.Now}");
+
         
         Debug.Log("File contents updated with StreamWriter");
     }
@@ -172,22 +171,18 @@ public class DataManager : MonoBehaviour, IManager
         // Do nothing if file exists
         if (File.Exists(filename)) return;
         
-        var xmlStream = File.Create(filename);
-        
-        using (var xmlWriter = XmlWriter.Create(xmlStream))
+        using var xmlStream = File.Create(filename);
+        using var xmlWriter = XmlWriter.Create(xmlStream);
+        xmlWriter.WriteStartDocument();
+        xmlWriter.WriteStartElement("level_progress");
+        for (var i = 1; i < 5; i++)
         {
-            xmlWriter.WriteStartDocument();
-            xmlWriter.WriteStartElement("level_progress");
-
-            for (var i = 1; i < 5; i++)
-            {
-                xmlWriter.WriteElementString("level", "Level-" + i);
-            }   
+            xmlWriter.WriteElementString("level", "Level-" + i);
         }
         
-        xmlStream.Close();
+        
     }
-    
+
     /// <summary>
     /// Writes to Debug.Log contents of file.
     /// </summary>
@@ -215,9 +210,9 @@ public class DataManager : MonoBehaviour, IManager
             return;
         }
 
-        var streamReader = new StreamReader(filename);
+        using var streamReader = new StreamReader(filename);
         Debug.Log(streamReader.ReadToEnd());
-        streamReader.Close();
+        
     }
     
     /// <summary>
@@ -240,9 +235,24 @@ public class DataManager : MonoBehaviour, IManager
     {
         var xmlSerializer = new XmlSerializer(typeof(List<Weapon>));
 
-        using (FileStream stream = File.Create(_xmlWeapons))
+        using var stream = File.Create(_xmlWeapons);
+        xmlSerializer.Serialize(stream, _weaponInventory);
+        
+    }
+
+    private void DeserializeXML()
+    {
+        // If there's no weapons XML file, do nothing
+        if (!File.Exists(_xmlWeapons)) return;
+        
+        var xmlSerializer = new XmlSerializer(typeof(List<Weapon>));
+
+        using var stream = File.OpenRead(_xmlWeapons);
+        var weapons = (List<Weapon>)xmlSerializer.Deserialize(stream);
+        foreach (var weapon in weapons)
         {
-            xmlSerializer.Serialize(stream, _weaponInventory);
+            Debug.Log($"Weapon: {weapon.name} - Damage: {weapon.damage}");
         }
+        
     }
 }
