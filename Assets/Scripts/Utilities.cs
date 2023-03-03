@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 public static class Utilities
 {
-    public static int playerDeaths = 0;
+    private static int _playerDeaths = 0;
 
-    public static string UpdateDeathCount(ref int countReference)
+    private static string UpdateDeathCount(ref int countReference)
     {
         countReference += 1;
         return $"Next time you'll be at number {countReference}";
@@ -30,8 +30,13 @@ public static class Utilities
     /// <returns></returns>
     public static bool RestartLevel(int sceneIndex)
     {
-        var message = UpdateDeathCount(ref playerDeaths);
-        Debug.Log($"You've died {playerDeaths} times.");
+        if (sceneIndex < 0)
+        {
+            throw new System.ArgumentException("Scene index cannot be negative.");
+        }
+        
+        var message = UpdateDeathCount(ref _playerDeaths);
+        Debug.Log($"You've died {_playerDeaths} times.");
         Debug.Log(message);
         
         SceneManager.LoadScene(sceneIndex);

@@ -24,7 +24,7 @@ public class GameBehavior : MonoBehaviour, IManager
     
     private readonly Stack<Loot> _lootStack = new Stack<Loot>();
     private int _itemsCollected = 0;
-    private int _playerHP = 10;
+    private int _playerHP = 2;
     private string _state;
     
 
