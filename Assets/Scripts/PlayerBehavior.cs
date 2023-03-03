@@ -23,6 +23,9 @@ public class PlayerBehavior : MonoBehaviour
     
     private GameBehavior _gameManager;
 
+    /// <summary>
+    /// Grabs components
+    /// </summary>
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -30,7 +33,9 @@ public class PlayerBehavior : MonoBehaviour
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameBehavior>();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Inputs
+    /// </summary>
     private void Update()
     {
         _vInput = Input.GetAxis("Vertical") * moveSpeed;
@@ -61,7 +66,7 @@ public class PlayerBehavior : MonoBehaviour
         if (IsGrounded() && _isJumping)
         {
             _rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
-            PlayerJump();
+            PlayerJump!();
         }
 
         _isJumping = false;
@@ -70,15 +75,19 @@ public class PlayerBehavior : MonoBehaviour
         if (_isShooting)
         {
             var newBullet = Instantiate(bullet, this.transform.position + new Vector3(0,0,1), this.transform.rotation);
-            var bulletRB = newBullet.GetComponent<Rigidbody>();
+            var bulletRb = newBullet.GetComponent<Rigidbody>();
 
             // velocity is used here so gravity isn't affecting the bullet
-            bulletRB.velocity = this.transform.forward * bulletSpeed;
+            bulletRb.velocity = this.transform.forward * bulletSpeed;
         }
 
         _isShooting = false;
     }
 
+    /// <summary>
+    /// Takes away a hit point if collision is with Enemy.
+    /// </summary>
+    /// <param name="collision">Other object in collision.</param>
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Enemy")

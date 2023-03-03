@@ -110,6 +110,15 @@ public class GameBehavior : MonoBehaviour, IManager
     }
 
     /// <summary>
+    /// Kills event subscription when object is inactive.
+    /// </summary>
+    private void OnDisable()
+    {
+        playerBehavior.PlayerJump -= HandlePlayerJump;
+        _debug("Jump event unsubscribed...");
+    }
+
+    /// <summary>
     /// Sets initial UI texts.
     /// </summary>
     private void Start()
