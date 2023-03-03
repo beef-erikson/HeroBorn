@@ -11,6 +11,9 @@ public class PlayerBehavior : MonoBehaviour
     public GameObject bullet;
     public float bulletSpeed = 100f;
 
+    public delegate void JumpingEvent();
+    public event JumpingEvent PlayerJump;
+    
     private float _vInput;
     private float _hInput;
     private Rigidbody _rb;
@@ -58,6 +61,7 @@ public class PlayerBehavior : MonoBehaviour
         if (IsGrounded() && _isJumping)
         {
             _rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+            PlayerJump();
         }
 
         _isJumping = false;

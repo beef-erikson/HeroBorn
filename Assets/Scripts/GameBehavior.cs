@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using CustomExtensions;
@@ -15,6 +16,7 @@ public class GameBehavior : MonoBehaviour, IManager
     public Button winButton;
     public Button lossButton;
     public string State { get; set; }
+    public PlayerBehavior playerBehavior;
 
     private delegate void DebugDelegate(string newText);
 
@@ -94,7 +96,19 @@ public class GameBehavior : MonoBehaviour, IManager
         progressText.text = updatedText;
         Time.timeScale = 0f;
     }
-    
+
+    /// <summary>
+    /// OnEnable good for event subscriptions vs. Awake - only loads when object is active.
+    /// Subscribes to PlayerBehavior.PlayerJump.
+    /// </summary>
+    private void OnEnable()
+    {
+        var player = GameObject.Find("Player");
+        playerBehavior = player.GetComponent<PlayerBehavior>();
+        playerBehavior.PlayerJump += HandlePlayerJump;
+        _debug("Jump event subscribed...");
+    }
+
     /// <summary>
     /// Sets initial UI texts.
     /// </summary>
@@ -114,6 +128,7 @@ public class GameBehavior : MonoBehaviour, IManager
         _state = "Game Manager initialized...";
         _state.FancyDebug();
         _debug(_state);
+        LogWithDelegate(_debug);
 
         _lootStack.Push(new Loot("Sword of Doom", 5));
         _lootStack.Push(new Loot("HP Boost", 1));
@@ -171,5 +186,15 @@ public class GameBehavior : MonoBehaviour, IManager
     private static void Print(string newText)
     {
         Debug.Log(newText);
+    }
+
+    private static void LogWithDelegate(DebugDelegate del)
+    {
+        del("Delegating the debug task...");
+    }
+
+    private void HandlePlayerJump()
+    {
+        _debug("Player has jumped...");
     }
 }
