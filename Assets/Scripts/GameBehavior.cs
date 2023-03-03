@@ -14,13 +14,18 @@ public class GameBehavior : MonoBehaviour, IManager
     public TMP_Text progressText;
     public Button winButton;
     public Button lossButton;
+    public string State { get; set; }
+
+    private delegate void DebugDelegate(string newText);
+
+    private readonly DebugDelegate _debug = Print;
     
     private readonly Stack<Loot> _lootStack = new Stack<Loot>();
     private int _itemsCollected = 0;
     private int _playerHP = 10;
     private string _state;
     
-    public string State { get; set; }
+
 
     /// <summary>
     /// Getter/setter for _itemsCollected.
@@ -108,7 +113,7 @@ public class GameBehavior : MonoBehaviour, IManager
     {
         _state = "Game Manager initialized...";
         _state.FancyDebug();
-        Debug.Log(_state);
+        _debug(_state);
 
         _lootStack.Push(new Loot("Sword of Doom", 5));
         _lootStack.Push(new Loot("HP Boost", 1));
@@ -122,6 +127,8 @@ public class GameBehavior : MonoBehaviour, IManager
         itemShop.AddItem(new Potion());
         itemShop.AddItem(new Antidote());
         Debug.Log($"Items for sale: {itemShop.GetStackCount<Potion>()}");
+
+        
     }
 
     /// <summary>
@@ -159,5 +166,10 @@ public class GameBehavior : MonoBehaviour, IManager
         {
             Debug.Log($"Rare item: {item.Name}!");
         }
+    }
+
+    private static void Print(string newText)
+    {
+        Debug.Log(newText);
     }
 }
