@@ -84,7 +84,20 @@ public class GameBehavior : MonoBehaviour, IManager
     /// </summary>
     public void RestartScene()
     {
-        Utilities.RestartLevel(0);
+        try
+        {
+            Utilities.RestartLevel(-1);
+            _debug("Level successfully restored...");
+        }
+        catch (System.ArgumentException exception)
+        {
+            Utilities.RestartLevel(0);
+            _debug($"Reverting to scene 0: {exception.ToString()}");
+        }
+        finally
+        {
+            _debug("Level restart has completed...");
+        }
     }
 
     /// <summary>
