@@ -118,10 +118,10 @@ public class GameBehavior : MonoBehaviour, IManager
 
         FilterLoot();
 
-        var itemShop = new Shop<string>();
-        itemShop.AddItem("Potion");
-        itemShop.AddItem("Antidote");
-        Debug.Log($"Items for sale: {itemShop.inventory.Count}");
+        var itemShop = new Shop<Collectable>();
+        itemShop.AddItem(new Potion());
+        itemShop.AddItem(new Antidote());
+        Debug.Log($"Items for sale: {itemShop.GetStackCount<Potion>()}");
     }
 
     /// <summary>

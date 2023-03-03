@@ -54,6 +54,7 @@
      <Compile Include="Assets/Scripts/CameraBehavior.cs" />
      <Compile Include="Assets/Scripts/ItemBehavior.cs" />
      <Compile Include="Assets/Scripts/BulletBehavior.cs" />
+     <Compile Include="Assets/Scripts/Collectable.cs" />
      <Compile Include="Assets/Scripts/ItemRotation.cs" />
      <Compile Include="Assets/Scripts/Weapon.cs" />
      <Compile Include="Assets/Scripts/GameBehavior.cs" />
