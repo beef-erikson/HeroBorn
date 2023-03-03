@@ -364,6 +364,7 @@
 "Assets/Scripts/Collectable.cs"
 "Assets/Scripts/CustomExtensions.cs"
 "Assets/Scripts/DataManager.cs"
+"Assets/Scripts/Destroyable.cs"
 "Assets/Scripts/EnemyBehavior.cs"
 "Assets/Scripts/GameBehavior.cs"
 "Assets/Scripts/IManager.cs"

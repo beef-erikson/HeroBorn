@@ -45,6 +45,7 @@
     <Analyzer Include="/home/beef-erikson/Unity/Hub/Editor/2022.2.8f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets/Scripts/Destroyable.cs" />
      <Compile Include="Assets/Scripts/Shop.cs" />
      <Compile Include="Assets/Scripts/Paladin.cs" />
      <Compile Include="Assets/Scripts/CustomExtensions.cs" />
