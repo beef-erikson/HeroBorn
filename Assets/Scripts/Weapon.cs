@@ -1,3 +1,14 @@
+/********************************
+ * Weapon.cs
+ * Serializable Weapon struct and WeaponShop class.
+ * Last Edit: 3-3-23
+ * Troy Martin
+ *
+ * Public Methods:
+ * public void PrintWeaponStats() - Prints the name and damage of the weapon.
+ * 
+ ********************************/
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;

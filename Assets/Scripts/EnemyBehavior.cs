@@ -1,3 +1,15 @@
+/********************************
+ * EnemyBehavior.cs
+ * Handles enemy AI and lives.
+ * Last Edit: 3-3-23
+ * Troy Martin
+ *
+ * Private Methods:
+ * private void InitializePatrolRoute() - Adds all children of patrolRoute to locations.
+ * private void MoveToNextPatrolLocation() - Move to next location in patrolRoute.
+ * 
+ ********************************/
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;

@@ -1,3 +1,14 @@
+/********************************
+ * PlayerBehavior.cs
+ * Handles player movement, jumping, shooting.
+ * Last Edit: 3-3-23
+ * Troy Martin
+ *
+ * Private Methods:
+ * private bool IsGrounded() - Returns whether the player is on the ground or not.
+ * 
+ ********************************/
+
 using UnityEngine;
 
 public class PlayerBehavior : MonoBehaviour

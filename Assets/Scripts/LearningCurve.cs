@@ -1,10 +1,27 @@
-using System.Collections;
+/********************************
+ * LearningCurve.cs
+ * Various examples of basic C# and Unity concepts.
+ * Last Edit: 3-3-23
+ * Troy Martin
+ *
+ * Public Methods:
+ * public void ComputerAge() - Computes a modified age integer.
+ * public int GenerateCharacter(string name, int level) - Prints out a character message.
+ * public void Thievery() - Prints out wealth.
+ * public void OpenTreasureChamber() - Prints out treasure chamber messages.
+ * public void PrintCharacterAction() - Prints battle information based on characters action.
+ * public void RollDice() - Prints the result based on diceRoll.
+ * public void FindPartyMember() - Prints out party members.
+ * public void HealthStatus() - Prints out health status until dead.
+ * 
+ ********************************/
+
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LearningCurve : MonoBehaviour
 {
-    private int _currentAge = 30;
+    private const int CurrentAge = 30;
     public int addedAge = 1;
 
     public float pi = 3.14f;
@@ -28,13 +45,13 @@ public class LearningCurve : MonoBehaviour
     public Transform lightTF;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Character hero = new();
-        Character villian = hero;
-        villian.name = "Sir Beef Erikson";
+        var villain = hero;
+        villain.name = "Sir Beef Erikson";
         hero.PrintStatsInfo();
-        villian.PrintStatsInfo();
+        villain.PrintStatsInfo();
 
         Character heroine = new("Sally");
         heroine.PrintStatsInfo();
@@ -62,7 +79,7 @@ public class LearningCurve : MonoBehaviour
     /// </summary>
     public void ComputeAge()
     {
-        Debug.Log(_currentAge + addedAge);
+        Debug.Log(CurrentAge + addedAge);
     }
 
     /// <summary>
@@ -111,7 +128,7 @@ public class LearningCurve : MonoBehaviour
         }
         else
         {
-            Debug.Log("Something is amis...");
+            Debug.Log("Something is amiss...");
         }
     }
 
@@ -167,7 +184,7 @@ public class LearningCurve : MonoBehaviour
             "Sterling the Knight"
         };
 
-        for (int i = 0; i < questPartyMembers.Count; i++)
+        for (var i = 0; i < questPartyMembers.Count; i++)
         {
             Debug.Log($"Name: {questPartyMembers[i]}");
 
@@ -177,7 +194,7 @@ public class LearningCurve : MonoBehaviour
             }
         }
 
-        foreach (string partyMember in questPartyMembers)
+        foreach (var partyMember in questPartyMembers)
         {
             Debug.Log($"{partyMember} - Here!");
         }
@@ -195,11 +212,5 @@ public class LearningCurve : MonoBehaviour
         }
 
         Debug.Log("Player KO'd...");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

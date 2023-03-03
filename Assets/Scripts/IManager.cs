@@ -1,6 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+/********************************
+ * IManager.cs
+ * Interface class for State and Initialize().
+ * Last Edit: 3-3-23
+ * Troy Martin
+ * 
+ ********************************/
 
 public interface IManager 
 {

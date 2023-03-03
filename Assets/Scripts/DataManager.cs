@@ -1,3 +1,30 @@
+/********************************
+ * DataManager.cs
+ * Various data management strategies using Text, StreamReader/Writer, JSON and XML.
+ * Last Edit: 3-3-23
+ * Troy Martin
+ *
+ * Public Methods:
+ * public void Initialize() - Data access methods are ran here.
+ * 
+ * Private Methods:
+ * private static void FilesystemInfo() - Logs various directory info.
+ * private void NewDirectory() - Creates directory specified in _dataPath, if not present.
+ * private void DeleteDirectory() - Recursively deletes directory specified in _dataPath.
+ * private void NewTextFile() - Creates _textFile in _dataPath with a header, if not present.
+ * private void WriteToTextFile() - Appends _textFile with time of game starting.
+ * private static void WriteToStream(string filename) - Writes header if not present and appends game start.
+ * private void WriteToXml(string filename) - Writes dummy info to XML file.
+ * private static void ReadFromFile(string filename) - Writes to Debug.Log contents of file.
+ * private static void ReadFromStream(string filename) - Writes to Debug.Log contents of file using StreamReader.
+ * private void DeleteFile(string filename) - Deletes filename, if it exists.
+ * private void SerializeXML() - Serializes list of weapons into an XML file.
+ * private void DeserializeXML() - Deserializes list of weapon from XML and outputs to Debug.Log.
+ * private void SerializeJson() - Serializes inventory into a JSON file.
+ * private void DeserializeJson() - Deserializes _jsonWeapons and outputs to Debug.Log.
+ * 
+ ********************************/
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,7 +71,7 @@ public class DataManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// Creates directory "Player_Data" if not already present.
+    /// Data access methods are ran here.
     /// </summary>
     public void Initialize()
     {
@@ -167,9 +194,9 @@ public class DataManager : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// Writes the contents of filename to XML file.
+    /// Writes dummy info to XML file.
     /// </summary>
-    /// <param name="filename">File to write to XML</param>
+    /// <param name="filename">XML file to create.</param>
     private void WriteToXML(string filename)
     {
         // Do nothing if file exists

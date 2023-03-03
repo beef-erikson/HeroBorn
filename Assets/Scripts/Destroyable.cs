@@ -1,7 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+/********************************
+ * Destroyable.cs
+ * Generic class that will destroy the GameObject in 3 second by default.
+ * Last Edit: 3-3-23
+ * Troy Martin
+ * 
+ ********************************/
+
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Destroyable<T> : MonoBehaviour where T : MonoBehaviour
 {

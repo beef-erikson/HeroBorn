@@ -1,11 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+/********************************
+ * Character.cs
+ * Holds name and experience for Character.
+ * Last Edit: 3-3-23
+ * Troy Martin
+ *
+ * Public Methods:
+ * public virtual void PrintStatsInfo() - Prints the name and experience of Character.
+ * 
+ * Private Methods:
+ * private void Reset() - Resets Character to default values.
+ * 
+ ********************************/
+
 using UnityEngine;
 
 public class Character
 {
     public string name;
-    public int exp = 0;
+    private int _exp = 0;
 
     // Constructors
     /// <summary>
@@ -31,7 +43,7 @@ public class Character
     /// </summary>
     public virtual void PrintStatsInfo()
     {
-        Debug.Log($"Hero: {this.name} - {this.exp} EXP");
+        Debug.Log($"Hero: {this.name} - {this._exp} EXP");
     }
 
     /// <summary>
@@ -40,6 +52,6 @@ public class Character
     private void Reset()
     {
         this.name = "Not assigned";
-        this.exp = 0;
+        this._exp = 0;
     }
 }

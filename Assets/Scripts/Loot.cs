@@ -1,6 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+/********************************
+ * Loot.cs
+ * Loot struct containing Name and Rarity.
+ * Last Edit: 3-3-23
+ * Troy Martin
+ *
+ ********************************/
 
 public struct Loot
 {

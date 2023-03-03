@@ -1,5 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+/********************************
+ * ItemBehavior.cs
+ * Adds 1 to Items in GameBehavior.cs when collided with, prints LootReport() and Destroys itself.
+ * Last Edit: 3-3-23
+ * Troy Martin
+ *
+ ********************************/
+
 using UnityEngine;
 
 public class ItemBehavior : MonoBehaviour
@@ -10,6 +16,7 @@ public class ItemBehavior : MonoBehaviour
     {
         gameManager = GameObject.Find("Game_Manager").GetComponent<GameBehavior>();
     }
+    
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name != "Player") return;

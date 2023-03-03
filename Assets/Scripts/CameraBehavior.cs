@@ -1,5 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+/********************************
+ * CameraBehavior.cs
+ * Manages camera position - 3rd person
+ * Last Edit: 3-3-23
+ * Troy Martin
+ * 
+ ********************************/
+
 using UnityEngine;
 
 public class CameraBehavior : MonoBehaviour

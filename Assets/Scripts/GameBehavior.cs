@@ -1,7 +1,25 @@
-using System;
+/********************************
+ * GameBehavior.cs
+ * Handles game logic for the overall game, inherits from IManager.
+ * Last Edit: 3-3-23
+ * Troy Martin
+ *
+ * Public Methods:
+ * public void RestartScene() - Restarts the scene at index 0.
+ * public void Initialize() - Initializes state and populates _lootStack, itemShop.
+ * public void PrintLootReport() - Prints out number of items in _lootStack.
+ *
+ * Private Methods:
+ * private void UpdateScene(string updatedText) - Updates progressText with provided string.
+ * private void FilterLoot() - Filters loot with LINQ and lambda.
+ * private static void Print(string newText) - Prints string to Debug.Log - delegate support.
+ * private static void LogWithDelegate(DebugDelegate del) - Prints message using passed delegate method.
+ * private void HandlePlayerJump() - Writes message to log whenever player jumps - event support.
+ * 
+ ********************************/
+
 using System.Collections.Generic;
 using System.Linq;
-using CustomExtensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -143,7 +161,7 @@ public class GameBehavior : MonoBehaviour, IManager
     }
 
     /// <summary>
-    /// Initializes state and populates _lootStack
+    /// Initializes state and populates _lootStack, itemShop.
     /// </summary>
     public void Initialize()
     {
@@ -181,6 +199,9 @@ public class GameBehavior : MonoBehaviour, IManager
         Debug.Log($"There are {_lootStack.Count} random loot items waiting for you!");
     }
 
+    /// <summary>
+    /// Filters loot with LINQ and lambda.
+    /// </summary>
     private void FilterLoot()
     {
         /*
@@ -205,16 +226,27 @@ public class GameBehavior : MonoBehaviour, IManager
         }
     }
 
+    /// <summary>
+    /// Prints string to Debug.Log - delegate support.
+    /// </summary>
+    /// <param name="newText">Text to log.</param>
     private static void Print(string newText)
     {
         Debug.Log(newText);
     }
 
+    /// <summary>
+    /// Prints message using passed delegate method.
+    /// </summary>
+    /// <param name="del">DebugDelegate method.</param>
     private static void LogWithDelegate(DebugDelegate del)
     {
         del("Delegating the debug task...");
     }
 
+    /// <summary>
+    /// Writes message to log whenever player jumps - event support.
+    /// </summary>
     private void HandlePlayerJump()
     {
         _debug("Player has jumped...");
